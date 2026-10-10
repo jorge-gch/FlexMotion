@@ -1,8 +1,24 @@
-venv/
-.venv/
-
-# Caché de Python
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
+*.egg-info/
 
-env
+# Virtual environment
+.venv/
+venv
+
+# Editors
+.vscode/
+
+# Generated data
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Trained models
+models/*
+!models/.gitkeep
+
+# Jupyter
+.ipynb_checkpoints/
