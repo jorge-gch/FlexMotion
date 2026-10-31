@@ -17,6 +17,11 @@ GESTURES = [
     "open_palm",
     "fist",
     "ok",
+    "peace",
+    "point_up",
+    "three",
+    "call_me",
+    "rock_on",
 ]
 
 

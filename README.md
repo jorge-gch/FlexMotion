@@ -1,6 +1,6 @@
 # FlexMotion
 
-FlexMotion is a real-time hand gesture recognition system built with OpenCV, MediaPipe, and PyTorch. It detects hands from a webcam, extracts landmark features, and classifies gestures such as thumbs up, open palm, fist, and OK.
+FlexMotion is a real-time hand gesture recognition system built with OpenCV, MediaPipe, and PyTorch. It detects hands from a webcam, extracts landmark features, and classifies static hand poses such as thumbs up, open palm, fist, and OK.
 
 ## Overview
 
@@ -39,8 +39,19 @@ Available gesture labels are defined in `src/data_collector.py`:
 - `open_palm`
 - `fist`
 - `ok`
+- `peace` — index and middle fingers raised (V sign)
+- `point_up` — index finger raised
+- `three` — index, middle, and ring fingers raised
+- `call_me` — thumb and little finger extended
+- `rock_on` — index and little fingers raised
 
-Use the space bar to start or pause recording, and press `Q` to exit.
+For example, collect the new `peace` gesture with:
+
+```bash
+python src/data_collector.py --gesture peace --samples 300
+```
+
+Repeat for each gesture you want the model to recognize. Use a similar number of samples for every label, vary your hand position and lighting, and keep each pose clear while recording. Use the space bar to start or pause recording, and press `Q` to exit.
 
 ## Training
 
@@ -99,6 +110,11 @@ python src/data_collector.py --gesture open_palm --samples 300
 python src/data_collector.py --gesture fist --samples 300
 python src/data_collector.py --gesture thumbs_up --samples 300
 python src/data_collector.py --gesture ok --samples 300
+python src/data_collector.py --gesture peace --samples 300
+python src/data_collector.py --gesture point_up --samples 300
+python src/data_collector.py --gesture three --samples 300
+python src/data_collector.py --gesture call_me --samples 300
+python src/data_collector.py --gesture rock_on --samples 300
 
 # 3. Train the model
 python src/train.py
