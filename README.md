@@ -112,7 +112,3 @@ python src/main.py
 - The project is intended for local experimentation and learning purposes.
 - For best results, collect a balanced dataset with consistent lighting and camera framing.
 - Model performance can improve by adding more gesture classes and more diverse training samples.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
