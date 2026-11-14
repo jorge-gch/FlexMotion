@@ -9,8 +9,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from torch.utils.data import DataLoader, TensorDataset
 
+from src.project_paths import project_path
 
-DATA_PATH = Path("data/raw/gestures.csv")
+
+DATA_PATH = project_path("data", "raw", "gestures.csv")
 RANDOM_STATE = 42
 
 

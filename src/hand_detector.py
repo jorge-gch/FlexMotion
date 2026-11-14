@@ -1,10 +1,13 @@
 
 import time
+from pathlib import Path
 
 import cv2
 import mediapipe as mp
 from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
+
+from src.project_paths import project_path
 
 
 # Connections between the 21 hand landmarks.
@@ -21,13 +24,17 @@ HAND_CONNECTIONS = [
 class HandDetector:
     def __init__(
         self,
-        model_path="models/hand_landmarker.task",
+        model_path=None,
         max_hands=1,
         detection_confidence=0.5,
     ):
+        model_path = project_path("models", "hand_landmarker.task") if model_path is None else Path(model_path)
+        if not model_path.is_absolute():
+            model_path = project_path(model_path)
+
         options = vision.HandLandmarkerOptions(
             base_options=python.BaseOptions(
-                model_asset_path=model_path
+                model_asset_path=str(model_path)
             ),
             running_mode=vision.RunningMode.VIDEO,
             num_hands=max_hands,

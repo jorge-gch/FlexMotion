@@ -1,20 +1,22 @@
 
-from pathlib import Path
 import json
+from pathlib import Path
 
+import joblib
 import matplotlib.pyplot as plt
 import torch
 from torch import nn
 
-from src.dataset import prepare_data
 from src.classifier import GestureClassifier
+from src.dataset import prepare_data
+from src.project_paths import project_path
 
 
 # Configuration
 EPOCHS = 100
 LEARNING_RATE = 0.001
 PATIENCE = 12
-MODEL_DIR = Path("models")
+MODEL_DIR = project_path("models")
 
 MODEL_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -39,14 +41,14 @@ model = GestureClassifier(num_classes=num_classes).to(device)
 criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(
     model.parameters(),
-    lr=LEARNING_RATE
+    lr=LEARNING_RATE,
 )
 
 # Training history
 history = {
     "train_loss": [],
     "val_loss": [],
-    "val_accuracy": []
+    "val_accuracy": [],
 }
 
 best_val_loss = float("inf")
@@ -56,8 +58,6 @@ checkpoint_path = MODEL_DIR / "gesture_model.pth"
 
 # Training loop
 for epoch in range(EPOCHS):
-
-    # Training
     model.train()
     train_loss_total = 0.0
 
@@ -77,7 +77,6 @@ for epoch in range(EPOCHS):
 
     train_loss = train_loss_total / len(train_loader.dataset)
 
-    # Validation
     model.eval()
     val_loss_total = 0.0
     correct = 0
@@ -111,7 +110,6 @@ for epoch in range(EPOCHS):
         f"Val Accuracy: {val_accuracy:.2%}"
     )
 
-    # Save the best model
     if val_loss < best_val_loss:
         best_val_loss = val_loss
         patience_counter = 0
@@ -123,30 +121,22 @@ for epoch in range(EPOCHS):
                 "input_size": 63,
                 "num_classes": num_classes,
             },
-            checkpoint_path
+            checkpoint_path,
         )
 
         print("  Best model saved.")
-
     else:
         patience_counter += 1
 
-    # Early stopping
     if patience_counter >= PATIENCE:
         print("Early stopping: validation loss did not improve.")
         break
 
-
-# Save the scaler used to normalize the features
-import joblib
-
 joblib.dump(scaler, MODEL_DIR / "scaler.joblib")
 
-# Save training history
 with open(MODEL_DIR / "training_history.json", "w") as file:
     json.dump(history, file, indent=4)
 
-# Plot training curves
 plt.figure(figsize=(10, 5))
 plt.plot(history["train_loss"], label="Training loss")
 plt.plot(history["val_loss"], label="Validation loss")

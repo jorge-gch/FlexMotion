@@ -19,7 +19,13 @@ This project is designed to collect labeled hand landmark data, train a lightwei
 
 The project depends on Python 3 and the packages listed in `requirements.txt`.
 
-Install them with:
+If you are using the bundled environment included in this repository, prefer:
+
+```bash
+./venv/bin/python -m pip install -r requirements.txt
+```
+
+You can also install with a system interpreter:
 
 ```bash
 pip install -r requirements.txt
@@ -30,7 +36,7 @@ pip install -r requirements.txt
 To collect new gesture samples, run the data collector and record a label from the webcam:
 
 ```bash
-python3 -m src.data_collector.py --gesture thumbs_up --samples 300
+./venv/bin/python -m src.data_collector --gesture thumbs_up --samples 300
 ```
 
 Available gesture labels are defined in `src/data_collector.py`:
@@ -48,7 +54,7 @@ Available gesture labels are defined in `src/data_collector.py`:
 For example, collect the new `peace` gesture with:
 
 ```bash
-python3 -m src.data_collector.py --gesture peace --samples 300
+./venv/bin/python -m src.data_collector --gesture peace --samples 300
 ```
 
 Repeat for each gesture you want the model to recognize. Use a similar number of samples for every label, vary your hand position and lighting, and keep each pose clear while recording. Use the space bar to start or pause recording, and press `Q` to exit.
@@ -58,7 +64,7 @@ Repeat for each gesture you want the model to recognize. Use a similar number of
 Once your dataset is ready, train the model:
 
 ```bash
-python3 -m src.train.py
+./venv/bin/python -m src.train
 ```
 
 This script:
@@ -75,7 +81,7 @@ This script:
 To run the webcam recognition demo:
 
 ```bash
-python3 -m srcmain.py
+./venv/bin/python -m src.main
 ```
 
 The app:
@@ -103,24 +109,24 @@ The model is trained using cross-entropy loss and monitored with validation accu
 
 ```bash
 # 1. Install dependencies
-pip install -r requirements.txt
+./venv/bin/python -m pip install -r requirements.txt
 
 # 2. Collect training data
-python3 -m src.data_collector.py --gesture open_palm --samples 300
-python3 -m src.data_collector.py --gesture fist --samples 300
-python3 -m src.data_collector.py --gesture thumbs_up --samples 300
-python3 -m src.data_collector.py --gesture ok --samples 300
-python3 -m src.data_collector.py --gesture peace --samples 300
-python3 -m src.data_collector.py --gesture point_up --samples 300
-python3 -m src.data_collector.py --gesture three --samples 300
-python3 -m src.data_collector.py --gesture call_me --samples 300
-python3 -m src.data_collector.py --gesture rock_on --samples 300
+./venv/bin/python -m src.data_collector --gesture open_palm --samples 300
+./venv/bin/python -m src.data_collector --gesture fist --samples 300
+./venv/bin/python -m src.data_collector --gesture thumbs_up --samples 300
+./venv/bin/python -m src.data_collector --gesture ok --samples 300
+./venv/bin/python -m src.data_collector --gesture peace --samples 300
+./venv/bin/python -m src.data_collector --gesture point_up --samples 300
+./venv/bin/python -m src.data_collector --gesture three --samples 300
+./venv/bin/python -m src.data_collector --gesture call_me --samples 300
+./venv/bin/python -m src.data_collector --gesture rock_on --samples 300
 
 # 3. Train the model
-python3 -m src.train.py
+./venv/bin/python -m src.train
 
 # 4. Run real-time recognition
-python3 -m src.main.py
+./venv/bin/python -m src.main
 ```
 
 ## Notes

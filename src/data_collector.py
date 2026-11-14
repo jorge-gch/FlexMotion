@@ -2,14 +2,14 @@
 import argparse
 import csv
 import time
-from pathlib import Path
 
 import cv2
 
 from src.hand_detector import HandDetector
+from src.project_paths import project_path
 
 
-DATA_DIR = Path("data/raw")
+DATA_DIR = project_path("data", "raw")
 CSV_PATH = DATA_DIR / "gestures.csv"
 
 GESTURES = [
